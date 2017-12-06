@@ -1,6 +1,8 @@
 open Jest;
 
-let example = [[5, 1, 9, 5], [7, 5, 3], [2, 4, 6, 8]];
+let example1 = [[5, 1, 9, 5], [7, 5, 3], [2, 4, 6, 8]];
+
+let example2 = [[5, 9, 2, 8], [9, 4, 7, 3], [3, 8, 6, 5]];
 
 let myInput = [
   [515, 912, 619, 2043, 96, 93, 2242, 1385, 2110, 860, 2255, 621, 1480, 118, 1230, 99],
@@ -21,12 +23,20 @@ let myInput = [
   [707, 668, 1778, 1687, 2073, 1892, 62, 1139, 908, 78, 1885, 800, 945, 712, 57, 65]
 ];
 
-let example =
-  describe(
-    "calculate",
-    () => {
-      open Expect;
-      test("Example", () => expect(Checksum.calculate(example)) |> toBe(18));
-      test("My input", () => expect(Checksum.calculate(myInput)) |> toBe(45972))
-    }
-  );
+describe(
+  "calculate - first",
+  () => {
+    open Expect;
+    test("Example", () => expect(Checksum.calculateFirst(example1)) |> toBe(18));
+    test("My input", () => expect(Checksum.calculateFirst(myInput)) |> toBe(45972))
+  }
+);
+
+describe(
+  "calculate - second",
+  () => {
+    open Expect;
+    test("Example", () => expect(Checksum.calculateSecond(example2)) |> toBe(9));
+    test("My input", () => expect(Checksum.calculateSecond(myInput)) |> toBe(326))
+  }
+);
