@@ -4,6 +4,8 @@ type direction =
   | Left
   | Down;
 
+type point = (int, int);
+
 let _changeDir = (dir) =>
   switch dir {
   | Right => Up
@@ -20,7 +22,7 @@ let _incSteps = (nextDir, currentSteps) =>
   | Down => currentSteps
   };
 
-let _nextCoordinates = ((x, y), dir) =>
+let _nextCoordinates = ((x, y): point, dir) : point =>
   switch dir {
   | Right => (x + 1, y)
   | Up => (x, y + 1)
@@ -28,8 +30,8 @@ let _nextCoordinates = ((x, y), dir) =>
   | Down => (x, y - 1)
   };
 
-let coordinates = (number) => {
-  let rec coordinatesRec = (~currentNum, ~dir, ~totalSteps, ~stepsRem, ~acc) =>
+let coordinates = (number) : point => {
+  let rec coordinatesRec = (~currentNum, ~dir, ~totalSteps, ~stepsRem, ~acc: point) =>
     if (currentNum == number) {
       acc
     } else if (stepsRem == 0) {
