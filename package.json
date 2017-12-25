@@ -15,5 +15,8 @@
     "bs-jest": "^0.2.0",
     "bs-platform": "2.0.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "jest": {
+    "testRegex": ".*_test.js"
+  }
 }
