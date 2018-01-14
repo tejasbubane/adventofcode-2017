@@ -1,6 +1,7 @@
-module SS = Set.Make(String);
-
-let s = ref(SS.empty);
+type state = {
+  bank: string,
+  iteration: int
+};
 
 let rec redistribute = (banks, index, pivot) => {
   let arrLen = Array.length(banks);
@@ -28,17 +29,26 @@ let maxIndex = (arr) => {
 
 let stringify = (arr) => arr |> Array.map(string_of_int) |> Array.to_list |> String.concat("");
 
-let rec iterate = (banks, currentMax, acc) => {
+let findPrev = (acc, str) => acc |> List.find((state) => state.bank == str);
+
+let rec iterate = (banks, currentMax, acc, iteration) => {
   let str = stringify(banks);
-  if (SS.mem(str, s^)) {
-    acc
-  } else {
+  switch (findPrev(acc, str)) {
+  | prevState => (prevState, iteration)
+  | exception Not_found =>
     let max = maxIndex(banks);
     if (max != currentMax) {
-      s := SS.add(str, s^);
-      iterate(redistribute(banks, max, max + 1), max, acc + 1)
+      let newAcc = [{bank: str, iteration}, ...acc];
+      iterate(redistribute(banks, max, max + 1), max, newAcc, iteration + 1)
     } else {
-      iterate(redistribute(banks, max, max + 1), max, acc)
+      iterate(redistribute(banks, max, max + 1), max, acc, iteration)
     }
   }
+};
+
+let solve1 = (banks) => snd(iterate(banks, 0, [], 0));
+
+let solve2 = (banks) => {
+  let (prevState, count) = iterate(banks, 0, [], 0);
+  count - prevState.iteration
 };
