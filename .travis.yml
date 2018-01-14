@@ -1,0 +1,20 @@
+language: node_js
+
+node_js:
+  - "node"
+
+sudo: false
+
+branches:
+   only:
+   - master
+
+before_script:
+  - npm run build
+
+cache:
+  directories:
+    - "node_modules"
+
+script:
+  - npm run test:ci
